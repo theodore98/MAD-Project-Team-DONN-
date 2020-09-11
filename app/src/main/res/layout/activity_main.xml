@@ -93,6 +93,7 @@
         android:text="@string/search"
         app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.465" />
 
@@ -166,7 +167,7 @@
         app:layout_constraintHorizontal_bias="0.705"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintVertical_bias="0.407" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
