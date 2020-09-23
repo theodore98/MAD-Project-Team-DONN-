@@ -14,5 +14,6 @@
     <string name="description2">  1500</string>
     <string name="Save"> Save</string>
     <string name="hi"> Delete</string>
+    <string name="todo">TODO</string>
 
 </resources>
