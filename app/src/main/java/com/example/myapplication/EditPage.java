@@ -16,8 +16,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,7 +33,7 @@ public class EditPage extends AppCompatActivity {
     EditText  proemailid, profname, prolname, prophoneno;
     Button editSave;
     FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    DatabaseReference reference;
     FirebaseUser user;
 
     public static final String TAG = "TAG";
@@ -42,20 +45,15 @@ public class EditPage extends AppCompatActivity {
 
             Intent data = getIntent();
 
-            String fName = data.getStringExtra("fName");
-            String lName = data.getStringExtra("lName");
-            String email = data.getStringExtra("email");
-            String phone = data.getStringExtra("phone");
+        proemailid = findViewById(R.id.editemail);
+        profname = findViewById(R.id.editfname);
+        prolname = findViewById(R.id.editlname);
+        prophoneno = findViewById(R.id.editphone);
+        editSave = findViewById(R.id.editsave);
 
             fAuth = FirebaseAuth.getInstance();
-            fStore = FirebaseFirestore.getInstance();
             user = fAuth.getCurrentUser();
-
-            proemailid = findViewById(R.id.editemail);
-            profname = findViewById(R.id.editfname);
-            prolname = findViewById(R.id.editlname);
-            prophoneno = findViewById(R.id.editphone);
-            editSave = findViewById(R.id.editsave);
+            reference = FirebaseDatabase.getInstance().getReference().child("admin");
 
 
             editSave.setOnClickListener(new View.OnClickListener() {
@@ -67,43 +65,39 @@ public class EditPage extends AppCompatActivity {
                         return;
                     }
 
-                    final String email = proemailid.getText().toString();
-                    user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    reference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onSuccess(Void aVoid) {
-                            DocumentReference documentReference = fStore.collection("users").document(user.getUid());
-                            Map<String,Object> edited = new HashMap<>();
-                            edited.put("email", email);
-                            edited.put("fName", profname.getText().toString());
-                            edited.put("lName", prolname.getText().toString());
-                            edited.put("phone", prophoneno.getText().toString());
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists())
+                            {
+                                String fname = snapshot.child("fName").getValue().toString();
+                                String lname = snapshot.child("lName").getValue().toString();
+                                String email = snapshot.child("email").getValue().toString();
+                                String phoneno = snapshot.child("fName").getValue().toString();
 
-                            documentReference.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(EditPage.this,"profile updated", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), Profile.class));
-                                    finish();
-                                }
-                            });
+                                proemailid.setText(email);
+                                profname.setText(fname);
+                                prolname.setText(lname);
+                                prophoneno.setText(phoneno);
 
-                           
+                                Log.d(TAG, "OnCreate: " + fname +" "+ lname+" " +email + " " + phoneno);
+                            }
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
+
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditPage.this, "Error occured with email", Toast.LENGTH_SHORT).show();
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(EditPage.this,"" +error.getMessage().toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
+
                 }
             });
 
-            proemailid.setText(email);
-            profname.setText(fName);
-            prolname.setText(lName);
-            prophoneno.setText(phone);
 
-        Log.d(TAG, "OnCreate: " + fName +" "+ lName+" " +email + " " + phone);
+
+
+
+
 
     }
 }

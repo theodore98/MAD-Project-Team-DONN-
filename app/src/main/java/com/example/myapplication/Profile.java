@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,62 +30,62 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import javax.annotation.Nullable;
 
 public class Profile extends AppCompatActivity {
-    TextView proemailid, profname, prolname, prophoneno;
+    String userId, proemailid, profname, prolname, prophoneno;
     FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    FirebaseUser admin;
+    DatabaseReference reference;
+    FirebaseDatabase database;
     Button editprof, logout, editDelete;
-    String userId;
+    TextView fnameView, lnameView, emailidView, phonenoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        profname = findViewById(R.id.fname);
-        prolname = findViewById(R.id.lname);
-        proemailid = findViewById(R.id.emailid);
-        prophoneno = findViewById(R.id.phoneno);
+        admin = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("admin");
+        userId = admin.getUid();
+
+        fnameView = findViewById(R.id.fname);
+        lnameView = findViewById(R.id.lname);
+        emailidView = findViewById(R.id.emailid);
+        phonenoView = findViewById(R.id.phoneno);
         editprof  = findViewById(R.id.editprof);
         logout = findViewById(R.id.prologout);
         editDelete = findViewById(R.id.editdelete);
 
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
+       reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               Admin adminProfile = snapshot.getValue(Admin.class);
 
-        userId = fAuth.getCurrentUser().getUid();
+               if(adminProfile != null)
+               {
+                   profname = adminProfile.fname;
+                   prolname = adminProfile.lname;
+                   proemailid = adminProfile.email;
+                   prophoneno = adminProfile.phoneno;
 
-        final DocumentReference documentReference = fStore.collection("users").document(userId);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                   emailidView.setText(proemailid);
+                   fnameView.setText(profname);
+                   lnameView.setText(prolname);
+                   phonenoView.setText(prophoneno);
 
-                if (documentSnapshot.exists()) {
-                    profname.setText(documentSnapshot.getString("fName"));
-                    prolname.setText(documentSnapshot.getString("lName"));
-                    proemailid.setText(documentSnapshot.getString("email"));
-                    prophoneno.setText(documentSnapshot.getString("phone"));
-                } else {
-
-                    Log.d("tag", "OnEvent: Document do not exist");
-                }
-            }
-        });
+                   Log.d("TAG", "OnCreate: " + profname +" "+ prolname+" " +proemailid + " " + prophoneno);
 
 
-        editprof.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i =  new Intent(view.getContext(),EditPage.class);
+               }
+           }
 
-                i.putExtra("fName", profname.getText().toString());
-                i.putExtra("lName", prolname.getText().toString());
-                i.putExtra("email", proemailid.getText().toString());
-                i.putExtra("phone", prophoneno.getText().toString());
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
 
-                startActivity(i);
-            }
-        });
+               Toast.makeText(Profile.this, "Not working", Toast.LENGTH_SHORT).show();
+           }
+       });
 
+/*
         editDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +121,7 @@ public class Profile extends AppCompatActivity {
 
             }
         });
-
+*/
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +137,9 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    }
+
+
+}
 
 
 

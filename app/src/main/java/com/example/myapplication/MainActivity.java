@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,11 +35,10 @@ public class MainActivity extends AppCompatActivity {
     EditText pfname, plname, pemail, ppnview, ppassword;
     Button maddbtn, gotoLogin;
     FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
     String userID;
     Boolean valid = true;
-
-
+    DatabaseReference reference;
+    FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +53,7 @@ public class MainActivity extends AppCompatActivity {
         maddbtn = findViewById(R.id.addbtn);
         gotoLogin =findViewById(R.id.gotologin);
 
-
-
-
         fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-
 
         maddbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     fAuth.createUserWithEmailAndPassword(pemail.getText().toString(),ppassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            FirebaseUser user  = fAuth.getCurrentUser();
+                            FirebaseUser admin  = fAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                            DocumentReference df = fStore.collection("users").document(user.getUid());
+
 
                             Map<String, Object> userInfo = new HashMap<>();
                             userInfo.put("fName", fname);
@@ -98,7 +93,20 @@ public class MainActivity extends AppCompatActivity {
                             userInfo.put("phone", phone);
 
                             userInfo.put("isAdmin", "1");
-                            df.set(userInfo);
+
+                            FirebaseDatabase.getInstance().getReference().child("admin").push()
+                                    .setValue(userInfo)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.i("tag", "OnComplete");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.i("tag", "OnFailure");
+                                }
+                            });
 
                             startActivity(new Intent(getApplicationContext(), Profile.class));
                             finish();
@@ -107,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(MainActivity.this, "Failed to create account", Toast.LENGTH_SHORT).show();
+                            Log.i("tag", "OnFailure");
                         }
                     });
                 }
