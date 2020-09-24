@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">RMSApp</string>
+    <string name="txtLogin">Login</string>
+    <string name="txtSignup">Signup</string>
+    <string name="txtNewUser">New User?</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtPassword">Password</string>
+    <string name="title">Food2U</string>
+    <string name="titlesignup">Signup</string>
+    <string name="txtUsername">Username</string>
+    <string name="txtContact">Contact Number</string>
+    <string name="createAccount">Create Account</string>
+    <string name="haveAccount">Already have an account?</string>
+    <string name="userProfile">User Profile</string>
+    <string name="confirmChanges">Confirm Changes</string>
+    <string name="deleteProfile">Delete Profile</string>
+    </resources>
