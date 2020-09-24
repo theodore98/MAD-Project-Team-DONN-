@@ -20,15 +20,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.ktx.Firebase;
 
 public class Login extends AppCompatActivity {
 
     EditText pemail, ppassword;
     Button loginbtn, gotoRegister;
     FirebaseAuth fAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,11 @@ public class Login extends AppCompatActivity {
 
         pemail = findViewById(R.id.pemailview);
         ppassword = findViewById(R.id.ppassword);
-        fAuth = FirebaseAuth.getInstance();
         loginbtn = findViewById(R.id.loginbtn);
         gotoRegister = findViewById(R.id.gotoregis);
+
+        fAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = fAuth.getCurrentUser();
 
         gotoRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +99,6 @@ public class Login extends AppCompatActivity {
         });
 
     }
-
 
 
     protected void onStart()

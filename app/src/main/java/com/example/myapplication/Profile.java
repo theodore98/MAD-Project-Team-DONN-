@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,6 +34,7 @@ public class Profile extends AppCompatActivity {
     String userId, proemailid, profname, prolname, prophoneno;
     FirebaseAuth fAuth;
     FirebaseUser admin;
+    FirebaseDatabase db;
     DatabaseReference reference;
     FirebaseDatabase database;
     Button editprof, logout, editDelete;
@@ -43,10 +45,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        admin = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("admin");
-        userId = admin.getUid();
-
         fnameView = findViewById(R.id.fname);
         lnameView = findViewById(R.id.lname);
         emailidView = findViewById(R.id.emailid);
@@ -55,6 +53,67 @@ public class Profile extends AppCompatActivity {
         logout = findViewById(R.id.prologout);
         editDelete = findViewById(R.id.editdelete);
 
+
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        admin = fAuth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("admin");
+
+        Query query = reference.orderByChild("email").equalTo(admin.getEmail());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot ds: snapshot.getChildren())
+                {
+                    String email = "" + ds.child("email").getValue();
+                    String fname = "" + ds.child("fName").getValue();
+                    String lname = "" + ds.child("lName").getValue();
+                    String phoneno = "" + ds.child("phone").getValue();
+
+                    fnameView.setText(fname);
+                    lnameView.setText(lname);
+                    emailidView.setText(email);
+                    phonenoView.setText(phoneno);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        editprof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent((getApplicationContext()), EditPage.class));
+                finish();
+            }
+        });
+
+/*
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Admin adminProfile = snapshot.getValue(Admin.class);
+
+                emailidView.setText(adminProfile.getEmail());
+                fnameView.setText(adminProfile.getFname());
+                lnameView.setText(adminProfile.getLname());
+                phonenoView.setText(adminProfile.getPhoneno());
+
+                Log.d("TAG", "onDataChange: ");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Toast.makeText(Profile.this, "Not working", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,18 +121,15 @@ public class Profile extends AppCompatActivity {
 
                if(adminProfile != null)
                {
+
                    profname = adminProfile.fname;
                    prolname = adminProfile.lname;
                    proemailid = adminProfile.email;
                    prophoneno = adminProfile.phoneno;
 
-                   emailidView.setText(proemailid);
-                   fnameView.setText(profname);
-                   lnameView.setText(prolname);
-                   phonenoView.setText(prophoneno);
 
                    Log.d("TAG", "OnCreate: " + profname +" "+ prolname+" " +proemailid + " " + prophoneno);
-
+                   Toast.makeText(Profile.this, "Retereved", Toast.LENGTH_SHORT).show();
 
                }
            }
@@ -81,11 +137,12 @@ public class Profile extends AppCompatActivity {
            @Override
            public void onCancelled(@NonNull DatabaseError error) {
 
-               Toast.makeText(Profile.this, "Not working", Toast.LENGTH_SHORT).show();
+
+               Log.d("TAG", "coudlmt find");
            }
        });
 
-/*
+*/
         editDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +154,9 @@ public class Profile extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        documentReference.delete()
+
+                        reference = FirebaseDatabase.getInstance().getReference("admin");
+                        admin.delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -121,7 +180,7 @@ public class Profile extends AppCompatActivity {
 
             }
         });
-*/
+
 
 
         logout.setOnClickListener(new View.OnClickListener() {

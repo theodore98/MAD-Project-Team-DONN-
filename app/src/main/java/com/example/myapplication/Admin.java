@@ -13,11 +13,11 @@ public class Admin {
 
     }
 
-    public Admin(String email, String fname, String lname, String password) {
+    public Admin(String email, String fname, String lname ) {
         this.email = email;
         this.fname = fname;
         this.lname = lname;
-        this.password = password;
+
     }
 
     public String getEmail() {

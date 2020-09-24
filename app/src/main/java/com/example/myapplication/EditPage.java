@@ -20,9 +20,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.ktx.Firebase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +32,13 @@ import java.util.Map;
 
 public class EditPage extends AppCompatActivity {
 
-    EditText  proemailid, profname, prolname, prophoneno;
+    EditText proemailid, profname, prolname, prophoneno;
     Button editSave;
     FirebaseAuth fAuth;
     DatabaseReference reference;
-    FirebaseUser user;
+    FirebaseUser admin;
+    FirebaseDatabase db;
+    String userId;
 
     public static final String TAG = "TAG";
 
@@ -43,7 +47,7 @@ public class EditPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_page);
 
-            Intent data = getIntent();
+
 
         proemailid = findViewById(R.id.editemail);
         profname = findViewById(R.id.editfname);
@@ -51,11 +55,67 @@ public class EditPage extends AppCompatActivity {
         prophoneno = findViewById(R.id.editphone);
         editSave = findViewById(R.id.editsave);
 
-            fAuth = FirebaseAuth.getInstance();
-            user = fAuth.getCurrentUser();
-            reference = FirebaseDatabase.getInstance().getReference().child("admin");
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        admin = fAuth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("admin").child(userId);
+        userId = fAuth.getCurrentUser().getUid();
 
 
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot ds: snapshot.getChildren())
+                {
+                    String fname = "" + ds.child("fName").getValue();
+                    String lname = "" + ds.child("lName").getValue();
+                    String email = "" + ds.child("email").getValue();
+                    String phoneno = "" + ds.child("phone").getValue();
+
+                    profname.setText(fname);
+                    prolname.setText(lname);
+                    proemailid.setText(email);
+                    prophoneno.setText(phoneno);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+           editSave.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   updateProfile(profname.getText().toString(),
+                                    prolname.getText().toString(),
+                                        proemailid.getText().toString(),
+                                        prophoneno.getText().toString());
+                   Toast.makeText(EditPage.this, "done", Toast.LENGTH_SHORT).show();
+               }
+
+               private void updateProfile(String proemailid, String profname, String prolname, String prophoneno) {
+
+                   reference = FirebaseDatabase.getInstance().getReference("admin").child(admin.getUid());
+
+                   HashMap<String, Object> adminMap = new HashMap<>();
+
+                   adminMap.put("fName", profname );
+                   adminMap.put("lName", prolname );
+                   adminMap.put("email", proemailid );
+                   adminMap.put("phone", prophoneno );
+
+                   reference.updateChildren(adminMap);
+
+               }
+           });
+
+
+
+/*
             editSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -92,6 +152,7 @@ public class EditPage extends AppCompatActivity {
 
                 }
             });
+*/
 
 
 
@@ -100,4 +161,6 @@ public class EditPage extends AppCompatActivity {
 
 
     }
+
+
 }
