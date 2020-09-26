@@ -102,32 +102,13 @@
         android:id="@+id/editsave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="150dp"
         android:layout_marginTop="108dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="@drawable/custom_rounded_button"
         android:text="Update"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/editdelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editphone" />
-
-    <Button
-        android:id="@+id/editdelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:background="@drawable/custom_rounded_button"
-        android:text="Delete"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editsave"
         app:layout_constraintTop_toBottomOf="@+id/editphone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

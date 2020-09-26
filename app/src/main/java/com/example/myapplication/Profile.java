@@ -37,7 +37,7 @@ public class Profile extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference reference;
     FirebaseDatabase database;
-    Button editprof, logout, editDelete;
+    Button editprof, logout, editDelete, editViewUsers;
     TextView fnameView, lnameView, emailidView, phonenoView;
 
     @Override
@@ -52,6 +52,7 @@ public class Profile extends AppCompatActivity {
         editprof  = findViewById(R.id.editprof);
         logout = findViewById(R.id.prologout);
         editDelete = findViewById(R.id.editdelete);
+        editViewUsers = findViewById(R.id.editViewU);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -88,6 +89,14 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent((getApplicationContext()), EditPage.class));
+                finish();
+            }
+        });
+
+        editViewUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent((getApplicationContext()), viewUsers.class));
                 finish();
             }
         });
@@ -147,26 +156,33 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
-                builder.setTitle("Delete Account")
-                .setMessage("Are you sure you want to delete?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    AlertDialog.Builder builder =new AlertDialog.Builder(Profile.this);
+                    builder.setTitle("Delete Account")
+                            .setMessage("Are you sure you want to delete?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
+                                    Query query  = reference.orderByChild("email").equalTo(admin.getEmail());
+                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for(DataSnapshot ds: snapshot.getChildren())
+                                            {
+                                                ds.getRef().removeValue();
+                                                Toast.makeText(Profile.this,"Account Removed", Toast.LENGTH_LONG).show();
+                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                            }
+                                        }
 
-                        reference = FirebaseDatabase.getInstance().getReference("admin");
-                        admin.delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(Profile.this, "Deleted", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                        finish();
-                                    }
-                                });
-                    }
-                })
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(Profile.this,"Account NOT Removed", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            })
+
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

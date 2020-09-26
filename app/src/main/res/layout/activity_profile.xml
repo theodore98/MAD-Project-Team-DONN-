@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailid" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/editViewU"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginStart="36dp"
@@ -83,7 +83,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/editdelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/editViewU" />
 
     <Button
         android:id="@+id/editdelete"
@@ -99,7 +99,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/editViewU" />
 
     <TextView
         android:id="@+id/fname"

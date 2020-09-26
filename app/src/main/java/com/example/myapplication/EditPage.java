@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,9 +37,11 @@ import java.util.Map;
 public class EditPage extends AppCompatActivity {
 
     EditText proemailid, profname, prolname, prophoneno;
-    Button editSave;
+    Button editSave, deleteBtn;
     FirebaseAuth fAuth;
     DatabaseReference reference;
+    DatabaseReference readReference;
+    DatabaseReference dbRef;
     FirebaseUser admin;
     FirebaseDatabase db;
     String userId;
@@ -54,23 +60,23 @@ public class EditPage extends AppCompatActivity {
         prolname = findViewById(R.id.editlname);
         prophoneno = findViewById(R.id.editphone);
         editSave = findViewById(R.id.editsave);
+        deleteBtn = findViewById(R.id.editdelete);
 
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         admin = fAuth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("admin").child(userId);
-        userId = fAuth.getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference("admin");
 
-
-        reference.addValueEventListener(new ValueEventListener() {
+        Query query = reference.orderByChild("email").equalTo(admin.getEmail());
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for(DataSnapshot ds: snapshot.getChildren())
                 {
+                    String email = "" + ds.child("email").getValue();
                     String fname = "" + ds.child("fName").getValue();
                     String lname = "" + ds.child("lName").getValue();
-                    String email = "" + ds.child("email").getValue();
                     String phoneno = "" + ds.child("phone").getValue();
 
                     profname.setText(fname);
@@ -85,8 +91,6 @@ public class EditPage extends AppCompatActivity {
 
             }
         });
-
-
            editSave.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
@@ -95,24 +99,45 @@ public class EditPage extends AppCompatActivity {
                                         proemailid.getText().toString(),
                                         prophoneno.getText().toString());
                    Toast.makeText(EditPage.this, "done", Toast.LENGTH_SHORT).show();
+                   startActivity(new Intent((getApplicationContext()), Profile.class));
+                   finish();
                }
 
-               private void updateProfile(String proemailid, String profname, String prolname, String prophoneno) {
+               private void updateProfile(final String proemailid, final String profname, final String prolname, final String prophoneno) {
 
-                   reference = FirebaseDatabase.getInstance().getReference("admin").child(admin.getUid());
 
-                   HashMap<String, Object> adminMap = new HashMap<>();
+                   FirebaseDatabase db = FirebaseDatabase.getInstance();
+                   reference = FirebaseDatabase.getInstance().getReference("admin");
 
-                   adminMap.put("fName", profname );
-                   adminMap.put("lName", prolname );
-                   adminMap.put("email", proemailid );
-                   adminMap.put("phone", prophoneno );
+                   Query query = reference.orderByChild("email").equalTo(admin.getEmail());
+                   query.addListenerForSingleValueEvent(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                   reference.updateChildren(adminMap);
+                           for(DataSnapshot ds: snapshot.getChildren())
+                           {
+                               HashMap<String, Object> adminMap = new HashMap<>();
+
+                               adminMap.put("fName", profname );
+                               adminMap.put("lName", prolname );
+                               adminMap.put("email", proemailid );
+                               adminMap.put("phone", prophoneno );
+
+                               reference.updateChildren(adminMap);
+
+                           }
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError error) {
+
+                       }
+                   });
+
+
 
                }
            });
-
 
 
 /*
@@ -155,12 +180,7 @@ public class EditPage extends AppCompatActivity {
 */
 
 
-
-
-
-
-
-    }
+            }
 
 
 }
