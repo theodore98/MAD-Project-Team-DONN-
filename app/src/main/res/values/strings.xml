@@ -15,5 +15,11 @@
     <string name="Save"> Save</string>
     <string name="hi"> Delete</string>
     <string name="todo">TODO</string>
+    <string name="addimage">+</string>
+    <string name="category">Category</string>
+    <string name="details">details</string>
+    <string name="fd_prof">Food Profile</string>
+    <string name="fd_list">FOOD LIST</string>
+
 
 </resources>

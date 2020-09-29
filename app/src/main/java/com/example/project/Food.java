@@ -2,26 +2,32 @@ package com.example.project;
 
 public class Food {
 
-    private String food_id;
+
     private  double  fd_price;
     private String  name;
     private  String description;
+    private String Category;
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
 
     Food(){
 
-        food_id = "";
+
         fd_price = 0.0;
         name ="";
         description="";
+        Category = "";
     }
 
-    public String getFood_id() {
-        return food_id;
-    }
 
-    public void setFood_id(String food_id) {
-        this.food_id = food_id;
-    }
+
+
 
     public double getFd_price() {
         return fd_price;
