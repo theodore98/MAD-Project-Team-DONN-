@@ -1,29 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+
+    android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    android:padding="20dp"
-    android:orientation="vertical">
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="1dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintTop_creator="50">
 
-    <TextView
-        android:id="@+id/fname"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="179dp"
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lname"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/emailid"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/phoneno"/>
 
-</LinearLayout>
+        <TextView
+
+            android:id="@+id/email_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/contact_tv"
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/contact_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/username_tv"
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

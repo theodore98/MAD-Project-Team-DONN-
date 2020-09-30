@@ -67,6 +67,7 @@ public class EditPage extends AppCompatActivity {
         admin = fAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("admin");
 
+
         Query query = reference.orderByChild("email").equalTo(admin.getEmail());
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -91,6 +92,8 @@ public class EditPage extends AppCompatActivity {
 
             }
         });
+
+
            editSave.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
@@ -107,15 +110,15 @@ public class EditPage extends AppCompatActivity {
 
 
                    FirebaseDatabase db = FirebaseDatabase.getInstance();
-                   reference = FirebaseDatabase.getInstance().getReference("admin");
+                   reference = db.getInstance().getReference("admin");
+
 
                    Query query = reference.orderByChild("email").equalTo(admin.getEmail());
                    query.addListenerForSingleValueEvent(new ValueEventListener() {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                           for(DataSnapshot ds: snapshot.getChildren())
-                           {
+
                                HashMap<String, Object> adminMap = new HashMap<>();
 
                                adminMap.put("fName", profname );
@@ -125,7 +128,6 @@ public class EditPage extends AppCompatActivity {
 
                                reference.updateChildren(adminMap);
 
-                           }
                        }
 
                        @Override
@@ -133,6 +135,7 @@ public class EditPage extends AppCompatActivity {
 
                        }
                    });
+
 
 
 

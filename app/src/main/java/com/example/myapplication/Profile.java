@@ -30,6 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import javax.annotation.Nullable;
 
+import static com.example.myapplication.Admin.*;
+
 public class Profile extends AppCompatActivity {
     String userId, proemailid, profname, prolname, prophoneno;
     FirebaseAuth fAuth;
@@ -88,8 +90,16 @@ public class Profile extends AppCompatActivity {
         editprof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent((getApplicationContext()), EditPage.class));
-                finish();
+
+                Intent i =new Intent(view.getContext(),EditPage.class);
+
+                i.putExtra("fName", profname);
+                i.putExtra("lName", prolname);
+                i.putExtra("email", proemailid);
+                i.putExtra("phone", prophoneno);
+
+               view.getContext().startActivity(i);
+
             }
         });
 
