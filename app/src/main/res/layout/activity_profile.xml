@@ -51,7 +51,7 @@
         android:layout_width="186dp"
         android:layout_height="44dp"
         android:fontFamily="@font/noto_sans"
-        android:text="adfdsfsdf"
+        android:text="@string/txtEmail"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,8 +2,11 @@ package com.example.rmsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,5 +52,27 @@ public class ProfileActivity extends AppCompatActivity {
         checkUserStatus();
         super.onStart();
     }
+
+    //Inflate options menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //inflating menu
+        getMenuInflater().inflate(R.menu.menu_main, menu) ;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //Handle menu item click
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //Get item id
+        int id = item.getItemId();
+        if(id == R.id.action_logout){
+            firebaseAuth.signOut();
+            checkUserStatus();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
 
