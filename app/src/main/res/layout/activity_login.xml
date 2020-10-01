@@ -3,28 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/start_background"
     android:layout_height="match_parent"
     tools:context=".Login">
 
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="268dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="184dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="127dp"
         android:layout_marginRight="127dp"
         android:layout_marginBottom="8dp"
         android:text="Admin Login Page"
-        android:textColor="#878787"
+        android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -57,7 +59,7 @@
         android:layout_height="46dp"
         android:layout_marginStart="54dp"
         android:layout_marginLeft="54dp"
-        android:layout_marginTop="158dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="53dp"
         android:layout_marginRight="53dp"
         android:ems="10"
@@ -89,7 +91,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="72dp"
         android:layout_marginLeft="72dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="72dp"
         android:layout_marginRight="72dp"
         android:background="#4B2665"
