@@ -7,14 +7,15 @@
     <string name="regbtn">Register Business</string>
     <string name="logbtn">Login</string>
     <string name="regHeader">Register</string>
-    <string name="bname">Business Name</string>
-    <string name="baddress">Address</string>
-    <string name="bmobile">Mobile</string>
-    <string name="bemail">Email</string>
-    <string name="bpassword">Password</string>
-    <string name="bowner">Owner</string>
-    <string name="bBank">Bank</string>
-    <string name="bacnumber">Account Number</string>
     <string name="regheader">Registration Form</string>
+    <string name="regsubmit">Submit</string>
+    <string name="hName">Name</string>
+    <string name="hAddress">Address</string>
+    <string name="hMobile">Mobile</string>
+    <string name="hEmail">Email</string>
+    <string name="hBank">Bank</string>
+    <string name="hOwner">Owner</string>
+    <string name="hAcNumber">Account Number</string>
+    <string name="hPassword">Password</string>
 
 </resources>
