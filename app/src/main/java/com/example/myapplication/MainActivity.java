@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         ppassword = findViewById(R.id.ppassword);
         maddbtn = findViewById(R.id.addbtn);
         gotoLogin =findViewById(R.id.gotologin);
+        final Loading loading = new Loading(MainActivity.this);
 
         fAuth = FirebaseAuth.getInstance();
 
@@ -100,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Log.i("tag", "OnComplete");
+                                    loading.startLoadingDialog();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            loading.dismissDialog();
+                                        }
+                                    },30000);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -107,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                                     Log.i("tag", "OnFailure");
                                 }
                             });
+
 
                             startActivity(new Intent(getApplicationContext(), Profile.class));
                             finish();
@@ -125,6 +136,14 @@ public class MainActivity extends AppCompatActivity {
         gotoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loading.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismissDialog();
+                    }
+                },30000);
                 startActivity(new Intent(getApplicationContext(),Login.class));
             }
         });

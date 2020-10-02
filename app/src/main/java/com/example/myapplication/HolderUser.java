@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 public class HolderUser extends FirebaseRecyclerAdapter<Customer,HolderUser.viewholder> {
 
@@ -21,11 +25,12 @@ public class HolderUser extends FirebaseRecyclerAdapter<Customer,HolderUser.view
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull viewholder holder, int position, @NonNull Customer customer) {
+    protected void onBindViewHolder(@NonNull final viewholder holder, final int position, @NonNull final Customer customer) {
 
         holder.username.setText(customer.getUsername());
         holder.contact.setText(customer.getContact());
         holder.email.setText(customer.getEmail());
+
     }
 
     @NonNull
@@ -39,6 +44,7 @@ public class HolderUser extends FirebaseRecyclerAdapter<Customer,HolderUser.view
     class viewholder extends RecyclerView.ViewHolder
     {
            TextView username, contact, email;
+           Button edit;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);

@@ -48,7 +48,7 @@
         android:layout_marginTop="160dp"
         android:layout_marginEnd="37dp"
         android:layout_marginRight="37dp"
-        android:background="@drawable/custom_rounded_orange"
+        android:background="@drawable/custom_rounded_green"
         android:text="View Companies"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="37dp"
         android:layout_marginRight="37dp"
-        android:background="@drawable/custom_rounded_green"
+        android:background="@drawable/custom_rounded_button"
         android:text="view Users"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="18dp"
         android:layout_marginRight="18dp"
-        android:background="@drawable/custom_rounded_pink"
+        android:background="@drawable/custom_rounded_blue"
         android:text="Edit Profile"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/editdelete"
@@ -96,64 +96,68 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="39dp"
         android:layout_marginRight="39dp"
-        android:background="@drawable/custom_rounded_pink"
+        android:background="@drawable/custom_rounded_blue"
         android:text="Delete"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editViewU" />
 
-    <TextView
+
+       <TextView
         android:id="@+id/fname"
         android:layout_width="200dp"
         android:layout_height="20dp"
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="112dp"
         android:layout_marginEnd="93dp"
         android:layout_marginRight="93dp"
         android:hint="First Name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/lname"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginRight="93dp"
-        android:hint="Last Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fname" />
+            android:id="@+id/lname"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="93dp"
+            android:layout_marginRight="93dp"
+            android:hint="Last Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fname" />
 
-    <TextView
-        android:id="@+id/emailid"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginRight="93dp"
-        android:hint="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lname" />
+        <TextView
+            android:id="@+id/emailid"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="93dp"
+            android:layout_marginRight="93dp"
+            android:hint="Email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lname" />
 
-    <TextView
-        android:id="@+id/phoneno"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginRight="93dp"
-        android:hint="Phone No"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailid" />
+        <TextView
+            android:id="@+id/phoneno"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="93dp"
+            android:layout_marginRight="93dp"
+            android:hint="Phone No"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailid" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

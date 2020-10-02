@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class Profile extends AppCompatActivity {
         editViewUsers = findViewById(R.id.editViewU);
 
 
+        final Loading loading = new Loading(Profile.this);
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         admin = fAuth.getCurrentUser();
@@ -106,6 +108,15 @@ public class Profile extends AppCompatActivity {
         editViewUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                loading.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismissDialog();
+                    }
+                },30000);
                 startActivity(new Intent((getApplicationContext()), viewUsers.class));
                 finish();
             }
@@ -213,6 +224,14 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+                loading.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismissDialog();
+                    }
+                },30000);
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
             }

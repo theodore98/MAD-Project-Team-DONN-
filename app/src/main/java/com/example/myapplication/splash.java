@@ -22,8 +22,8 @@ public class splash extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         img1=(ImageView)findViewById(R.id.logo);
-/*
-        top= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.mainlogo); */
+
+        top= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.mainlogo); 
 
         img1.setAnimation(top);
 

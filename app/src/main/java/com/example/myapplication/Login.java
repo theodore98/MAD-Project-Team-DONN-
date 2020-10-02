@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -42,6 +43,7 @@ public class Login extends AppCompatActivity {
         ppassword = findViewById(R.id.ppassword);
         loginbtn = findViewById(R.id.loginbtn);
         gotoRegister = findViewById(R.id.gotoregis);
+        final Loading loading = new Loading(Login.this);
 
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = fAuth.getCurrentUser();
@@ -49,6 +51,14 @@ public class Login extends AppCompatActivity {
         gotoRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loading.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismissDialog();
+                    }
+                },30000);
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
@@ -85,6 +95,14 @@ public class Login extends AppCompatActivity {
 
                         if(task.isSuccessful())
                         {
+                            loading.startLoadingDialog();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                        loading.dismissDialog();
+                                }
+                            },30000);
                             startActivity(new Intent(Login.this, Profile.class));
                         }
                         else

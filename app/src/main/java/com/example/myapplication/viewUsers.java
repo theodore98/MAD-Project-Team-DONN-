@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +40,7 @@ public class viewUsers extends AppCompatActivity {
     DatabaseReference ref;
     FirebaseDatabase db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +51,17 @@ public class viewUsers extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Customer> options =
                 new FirebaseRecyclerOptions.Builder<Customer>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Customer"), Customer.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Customers"), Customer.class)
                         .build();
 
         holderUser = new HolderUser(options);
         recyclerView.setAdapter(holderUser);
+
+
+        String Cuskey = getIntent().getStringExtra("CustomersKey");
+        ref  = FirebaseDatabase.getInstance().getReference().child("Customers").child("CustomersKey");
+
+
 }
 
     @Override
@@ -90,11 +100,13 @@ public class viewUsers extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+
     private void processSearch(String s) {
 
         FirebaseRecyclerOptions<Customer> options =
                 new FirebaseRecyclerOptions.Builder<Customer>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Customer").orderByChild("username").startAt(s).endAt(s +"\uf8ff"), Customer.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Customers").orderByChild("username").startAt(s).endAt(s +"\uf8ff"), Customer.class)
                         .build();
 
         holderUser= new HolderUser(options);
