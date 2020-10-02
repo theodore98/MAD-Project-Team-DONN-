@@ -17,5 +17,6 @@
     <string name="hOwner">Owner</string>
     <string name="hAcNumber">Account Number</string>
     <string name="hPassword">Password</string>
+    <string name="register">Register</string>
 
 </resources>
