@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static  final int REQUEST_RESPONSE=1;
+    public static  final String DESCRIPTION ="DESCRIPTION";
     Button btn;
     Button edit;
     //ImageButton bt2;
@@ -84,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
               public void onDataChange(@NonNull DataSnapshot snapshot) {
                   for (DataSnapshot snap :snapshot.getChildren())
                   {
-                      food = snap.getValue(Food.class);
+                     food = snap.getValue(Food.class);
 
 
                       assert food != null;
-                      foodlist.add(food.getName().toString()+"\n\n"+ food.getDescription().toString()+"\n"+food.getFd_price());
+                      foodlist.add(food.getName().toString()+"\n\n"+food.getDescription());
 
 
 
@@ -101,15 +103,15 @@ public class MainActivity extends AppCompatActivity {
                       @Override
                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                          String des =food.getDescription();
-                          double pr = food.getFd_price();
+                          //String des =food.getDescription();
+                          //double pr = food.getFd_price();
 
 
 
                           Intent  intent1 = new Intent (MainActivity.this,Edit.class);
-                          intent1.putExtra("food_name",des);
-                          intent1.putExtra("price", pr);
-                          startActivity(intent1);
+                          intent1.putExtra(DESCRIPTION ,adapt.getItem(position));
+                          //intent1.putExtra("price", pr);
+                          startActivityForResult(intent1,REQUEST_RESPONSE);
 
                       }
                   }) ;

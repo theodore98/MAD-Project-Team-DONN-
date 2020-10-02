@@ -1,5 +1,7 @@
 package com.example.project;
 
+import android.net.Uri;
+
 public class Food {
 
 
@@ -7,6 +9,7 @@ public class Food {
     private String  name;
     private  String description;
     private String Category;
+    private String Imageur;
 
     public String getCategory() {
         return Category;
@@ -14,6 +17,14 @@ public class Food {
 
     public void setCategory(String category) {
         Category = category;
+    }
+
+    public String  getImageur() {
+        return Imageur;
+    }
+
+    public void setImageur(String imageur) {
+        Imageur = imageur;
     }
 
     Food(){

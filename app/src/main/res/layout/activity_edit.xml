@@ -72,19 +72,17 @@
         app:layout_constraintTop_toBottomOf="@+id/image"
         app:layout_constraintVertical_bias="0.644" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/pr"
-        android:layout_width="250dp"
-        android:layout_height="55dp"
-        android:background="@android:drawable/editbox_background"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="255dp"
+        android:layout_height="39dp"
         android:gravity="center"
-        android:hint="@string/description2"
-        android:text="@string/description2"
+        android:text="@string/Editfd"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

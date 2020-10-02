@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,15 +37,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 
 public class newfood extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    String [] foods={"Sea foods","chinese food","local","Pizza"};
-    private static final int IMAGE_REQUEST =1;
+    String [] foods={"Pick a category ","Sea foods","chinese food","local","Pizza"};
+    private static final int IMAGE_REQUEST =2;
     long i =0;
     private Uri Imageuri;
     EditText name , price, description;
     Button   confirm,image;
+    ImageView imageView;
     TextView category;
     Spinner spinner;
     DatabaseReference dbRef;
@@ -55,6 +62,9 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
         name.setText("");
         price.setText("");
         description.setText("");
+        imageView.setImageResource(0);
+        spinner.setSelection(0);
+
     }
 
         @Override
@@ -68,7 +78,7 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
         description = findViewById(R.id.descript);
         spinner = (Spinner) findViewById(R.id.spinner1);
         category =findViewById(R.id.category);
-
+        imageView = findViewById(R.id.foodIM);
         confirm = findViewById(R.id.confirm);
         image = findViewById(R.id.addimage);
 
@@ -78,9 +88,10 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+        String  s = spinner.getSelectedItem().toString();
         fd = new Food();
         dbRef = FirebaseDatabase.getInstance().getReference().child("Foods");
-        dbRef.addValueEventListener(new ValueEventListener() {
+       /* dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists())
@@ -93,7 +104,7 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,9 +118,19 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
                     else if (TextUtils.isEmpty(description.getText().toString()))
                         Toast.makeText(getApplicationContext(), "Please Enter Description", Toast.LENGTH_SHORT).show();
 
+                    else if (spinner.getSelectedItem().toString().trim().equals("Pick a category")){
+                        Toast.makeText(getApplicationContext(),"Please select a Category",Toast.LENGTH_SHORT).show();
+
+                    }
+                    else if (imageView.getDrawable()== null){
+                        Toast.makeText(getApplicationContext(),"Please select an image",Toast.LENGTH_SHORT).show();
+                    }
+
+
+
                     else {
 
-                        while (i != -1) {
+
                             fd.setName(name.getText().toString().trim());
                             fd.setFd_price(Double.parseDouble(price.getText().toString().trim()));
                             fd.setDescription(description.getText().toString().trim());
@@ -117,10 +138,14 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
                             dbRef.push().setValue(fd);
 
 
-                            ++i;
+
+
                             Toast.makeText(getApplicationContext(), "data saved successfully", Toast.LENGTH_SHORT).show();
                             clearControls();
-                        }
+                            Intent in = new Intent(newfood.this,MainActivity.class);
+                            startActivity(in);
+
+
                     }
                 } catch (NumberFormatException e) {
 
@@ -130,6 +155,9 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
                 }
             }
         });
+
+
+
 
 
         image.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +184,25 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
         protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK ) {
+            assert data != null;
             Imageuri = data.getData();
-            uploadimage();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),Imageuri);
+
+                imageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            /*confirm.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {*/
+
+                   uploadimage();
+           /*    }
+           });*/
         }
     }
 
@@ -175,7 +220,7 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
         pd.show();
 
         if (Imageuri != null) {
-            final StorageReference fileRef = FirebaseStorage.getInstance().getReference().child("images").child(System.currentTimeMillis() + "." + getfileExtension(Imageuri));
+            final StorageReference fileRef = FirebaseStorage.getInstance().getReference().child("image").child(System.currentTimeMillis() + "." + getfileExtension(Imageuri));
             fileRef.putFile(Imageuri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -183,8 +228,13 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
                         @Override
                         public void onSuccess(Uri uri) {
                             String url = uri.toString();
+
+
+
+
                             Log.d("DownloadUrl", url);
                             pd.dismiss();
+
                             Toast.makeText(newfood.this, "Image Upload Successful", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -203,5 +253,8 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+
     }
+
+
 }

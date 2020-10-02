@@ -46,7 +46,7 @@ public class Edit extends AppCompatActivity {
         edit = findViewById(R.id.edit);
         save = findViewById(R.id.save);
         descript= findViewById(R.id.descript);
-        price = findViewById(R.id.pr);
+        //price = findViewById(R.id.pr);
         fd = new Food();
 
 
@@ -66,10 +66,9 @@ public class Edit extends AppCompatActivity {
                 upRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.hasChild("foods"))
-                        {
+
                             try {
-                                fd.setFd_price(Double.parseDouble(price.getText().toString().trim()));
+                                //fd.setFd_price(Double.parseDouble(price.getText().toString().trim()));
                                 fd.setDescription(descript.getText().toString().trim());
 
                                 dbRef =FirebaseDatabase.getInstance().getReference().child("Foods");
@@ -88,10 +87,10 @@ public class Edit extends AppCompatActivity {
                             }
                         }
 
-                        else{
+                       /* else{
                             Toast.makeText(getApplicationContext(),"No source to Update",Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                        }*/
+
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -109,12 +108,12 @@ public class Edit extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Bundle b = this.getIntent().getExtras();
-        String name=getIntent().getStringExtra("food_name");
-        double pri = getIntent().getDoubleExtra("price", 0);
+        //Bundle b = this.getIntent().getExtras();
+        String name= getIntent().getStringExtra(MainActivity.DESCRIPTION);
+        //double pri = getIntent().getDoubleExtra("price", 0);
 
         descript.setText(name);
-        price.setText(String.valueOf(pri));
+       // price.setText(String.valueOf(pri));
 
 
     }
