@@ -4,31 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/background"
     tools:context=".Profile">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="19dp"
+        android:layout_width="262dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
         android:text="Welcome Admin "
-        android:textSize="36sp"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/prologout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button24"
+        android:id="@+id/prologout"
         android:layout_width="79dp"
         android:layout_height="38dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
         android:background="@drawable/custom_rounded_button"
+        android:onClick="logout"
         android:text="Logout"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
@@ -36,37 +39,24 @@
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="353dp"
-        android:layout_height="301dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/editViewCom"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="37dp"
         android:layout_marginRight="37dp"
-        android:background="@drawable/custom_rounded_orange"
+        android:background="@drawable/custom_rounded_green"
         android:text="View Companies"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toBottomOf="@+id/emailid" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/editViewU"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginStart="36dp"
@@ -74,27 +64,125 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="37dp"
         android:layout_marginRight="37dp"
-        android:background="@drawable/custom_rounded_green"
+        android:background="@drawable/custom_rounded_button"
         android:text="view Users"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/editViewCom" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="320dp"
+        android:id="@+id/editprof"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/custom_rounded_pink"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:background="@drawable/custom_rounded_blue"
         android:text="Edit Profile"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/editdelete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editViewU" />
+
+    <Button
+        android:id="@+id/editdelete"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="204dp"
+        android:layout_marginLeft="204dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginRight="39dp"
+        android:background="@drawable/custom_rounded_blue"
+        android:text="Delete"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/editViewU" />
+
+
+    <TextView
+        android:id="@+id/fname"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="112dp"
+        android:background="@drawable/cus_input"
+        android:drawableStart="@drawable/cus_person_icon"
+        android:drawableLeft="@drawable/cus_pass_icon"
+        android:drawablePadding="12dp"
+        android:hint="First Name"
+        android:paddingStart="12dp"
+
+        android:paddingTop="5dp"
+        android:paddingEnd="12dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/lname"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cus_input"
+        android:drawableStart="@drawable/cus_person_icon"
+        android:drawableLeft="@drawable/cus_pass_icon"
+        android:drawablePadding="12dp"
+        android:hint="Last Name"
+
+        android:paddingTop="5dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fname" />
+
+    <TextView
+        android:id="@+id/emailid"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cus_input"
+        android:drawableStart="@drawable/cus_email_icon"
+        android:drawableLeft="@drawable/cus_email_icon"
+        android:drawablePadding="12dp"
+        android:hint="Email"
+
+        android:paddingTop="5dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lname" />
+
+    <TextView
+        android:id="@+id/phoneno"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cus_input"
+        android:drawableStart="@drawable/cus_phone_icon"
+        android:drawableLeft="@drawable/cus_pass_icon"
+        android:drawablePadding="12dp"
+        android:hint="Phone No"
+        android:paddingTop="5dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailid" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

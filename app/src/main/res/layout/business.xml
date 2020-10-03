@@ -1,0 +1,122 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="1dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintTop_creator="50">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="403dp"
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+
+            android:id="@+id/bus_email_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/bus_contact_tv"
+            android:layout_marginTop="1dp"
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/bus_contact_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/owner_tv"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/owner_tv"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/address_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/bus_email_tv"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/accountNo_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/address_tv"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:hint="text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+        android:id="@+id/bank_tv"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/accountNo_tv"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:hint="text"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/bank_tv"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:hint="text"
+
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/userDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="Delete" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
