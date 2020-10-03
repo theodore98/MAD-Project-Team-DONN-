@@ -22,5 +22,7 @@
     <string name="food">Food</string>
     <string name="orders">Orders</string>
     <string name="welcome">Welcome</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 
 </resources>
