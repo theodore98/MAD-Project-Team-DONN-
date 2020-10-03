@@ -84,14 +84,14 @@ public class RegisterBusiness extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 HashMap<String , String> hashMap1 = new HashMap<>();
-                                hashMap1.put("Mobile No",MOBILE);
-                                hashMap1.put("Name",NAME);
-                                hashMap1.put("Owner",OWNER);
-                                hashMap1.put("Bank",BANK);
-                                hashMap1.put("Account Number",ACNUMBER);
-                                hashMap1.put("Email",EMAIL);
-                                hashMap1.put("Password",PASSWORD);
-                                hashMap1.put("Address",ADDRESS);
+                                hashMap1.put("mobileNo",MOBILE);
+                                hashMap1.put("name",NAME);
+                                hashMap1.put("owner",OWNER);
+                                hashMap1.put("bank",BANK);
+                                hashMap1.put("accountNumber",ACNUMBER);
+                                hashMap1.put("email",EMAIL);
+                                hashMap1.put("password",PASSWORD);
+                                hashMap1.put("address",ADDRESS);
 
                                 firebaseDatabase.getInstance().getReference("Business")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -109,6 +109,9 @@ public class RegisterBusiness extends AppCompatActivity {
                                                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
+                                                            Intent regRedirect = new Intent(RegisterBusiness.this,HomeBusiness.class);
+                                                            regRedirect.putExtra("email",EMAIL);
+                                                            startActivity(regRedirect);
 
                                                             dialog.dismiss();
 

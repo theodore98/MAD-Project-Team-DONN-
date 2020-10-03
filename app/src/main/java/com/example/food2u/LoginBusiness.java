@@ -73,6 +73,7 @@ public class LoginBusiness extends AppCompatActivity {
                                     mDialog.dismiss();
                                     Toast.makeText(LoginBusiness.this, "Congradulations You have Successfully Logged In", Toast.LENGTH_SHORT).show();
                                     Intent BusinessHomeDirect = new Intent(LoginBusiness.this, HomeBusiness.class);
+                                    BusinessHomeDirect.putExtra("email",EMAIL);
                                     startActivity(BusinessHomeDirect);
                                     finish();
                                 } else {
@@ -90,7 +91,7 @@ public class LoginBusiness extends AppCompatActivity {
             }
         });
 
-
+ 
 
 
 

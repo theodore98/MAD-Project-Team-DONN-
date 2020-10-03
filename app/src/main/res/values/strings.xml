@@ -18,5 +18,9 @@
     <string name="hAcNumber">Account Number</string>
     <string name="hPassword">Password</string>
     <string name="register">Register</string>
+    <string name="profile">Profile</string>
+    <string name="food">Food</string>
+    <string name="orders">Orders</string>
+    <string name="welcome">Welcome</string>
 
 </resources>
