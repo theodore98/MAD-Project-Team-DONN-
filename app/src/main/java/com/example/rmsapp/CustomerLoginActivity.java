@@ -23,14 +23,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class CustomerLoginActivity extends AppCompatActivity {
     TextView Signup, RecoverPassword;
     EditText emailLogin, passwordLogin;
     Button submitLogin;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_customerlogin);
 
         //ActionBar and its title
         ActionBar actionBar = getSupportActionBar();
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         Signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Signup.class);
+                Intent intent = new Intent(CustomerLoginActivity.this, Signup.class);
                 startActivity(intent);
                 finish();
             }
@@ -156,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 progressDialog.dismiss();
                 if(task.isSuccessful()){
-                    Toast.makeText(MainActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerLoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerLoginActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
                 //Retrieve and display correct error message
-                Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CustomerLoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -205,13 +204,13 @@ public class MainActivity extends AppCompatActivity {
                             //Insert hashmap data into database
                             dbRef.child(uid).setValue(hashMap);
                             //User logged in
-                            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                            startActivity(new Intent(CustomerLoginActivity.this, DashboardActivity.class));
                             finish();
                         } else {
                             //Dismiss progress dialog
                             progressDialog.dismiss();
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(CustomerLoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 //Dismiss progress dialog
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CustomerLoginActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

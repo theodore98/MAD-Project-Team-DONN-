@@ -25,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 
 public class Signup extends AppCompatActivity {
     EditText txtEmail, txtPassword;
@@ -87,7 +86,7 @@ public class Signup extends AppCompatActivity {
         redirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Signup.this, MainActivity.class);
+                Intent intent = new Intent(Signup.this, CustomerLoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -125,7 +124,7 @@ public class Signup extends AppCompatActivity {
                             dbRef.child(uid).setValue(hashMap);
 
                             Toast.makeText(Signup.this, "Account Created Successfully \n"+user.getEmail(),Toast.LENGTH_SHORT);
-                            startActivity(new Intent(Signup.this, ProfileActivity.class));
+                            startActivity(new Intent(Signup.this, DashboardActivity.class));
                             finish();
 
                         } else {
