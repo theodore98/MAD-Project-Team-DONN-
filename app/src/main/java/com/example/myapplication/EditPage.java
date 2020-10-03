@@ -53,6 +53,7 @@ public class EditPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_page);
 
+        Intent in = getIntent();
 
 
         proemailid = findViewById(R.id.editemail);
@@ -61,11 +62,25 @@ public class EditPage extends AppCompatActivity {
         prophoneno = findViewById(R.id.editphone);
         editSave = findViewById(R.id.editsave);
         deleteBtn = findViewById(R.id.editdelete);
+        Admin ad = new Admin();
 
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         admin = fAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("admin");
+
+        String fname = getIntent().getStringExtra("fName");
+        String lname = getIntent().getStringExtra("lName");
+        String email = getIntent().getStringExtra("email");
+        String phoneno = getIntent().getStringExtra("phone");
+        final String key = getIntent().getStringExtra("key");
+
+        profname.setText(fname);
+        prolname.setText(lname);
+        proemailid.setText(email);
+        prophoneno.setText(phoneno);
+
+
 
 
         Query query = reference.orderByChild("email").equalTo(admin.getEmail());
@@ -111,7 +126,7 @@ public class EditPage extends AppCompatActivity {
 
                    FirebaseDatabase db = FirebaseDatabase.getInstance();
                    reference = db.getInstance().getReference("admin");
-
+                   String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                    Query query = reference.orderByChild("email").equalTo(admin.getEmail());
                    query.addListenerForSingleValueEvent(new ValueEventListener() {

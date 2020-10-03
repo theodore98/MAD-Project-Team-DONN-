@@ -27,8 +27,4 @@ class Loading {
 
         }
 
-        void dismissDialog()
-        {
-            dialog.dismiss();
-        }
 }

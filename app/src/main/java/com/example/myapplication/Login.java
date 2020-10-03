@@ -56,7 +56,6 @@ public class Login extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loading.dismissDialog();
                     }
                 },30000);
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -100,7 +99,7 @@ public class Login extends AppCompatActivity {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                        loading.dismissDialog();
+
                                 }
                             },30000);
                             startActivity(new Intent(Login.this, Profile.class));

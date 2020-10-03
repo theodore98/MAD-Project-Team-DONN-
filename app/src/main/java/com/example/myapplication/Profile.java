@@ -40,7 +40,7 @@ public class Profile extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference reference;
     FirebaseDatabase database;
-    Button editprof, logout, editDelete, editViewUsers;
+    Button editprof, logout, editDelete, editViewUsers, editViewCom;
     TextView fnameView, lnameView, emailidView, phonenoView;
 
     @Override
@@ -56,6 +56,7 @@ public class Profile extends AppCompatActivity {
         logout = findViewById(R.id.prologout);
         editDelete = findViewById(R.id.editdelete);
         editViewUsers = findViewById(R.id.editViewU);
+        editViewCom = findViewById(R.id.editViewCom);
 
 
         final Loading loading = new Loading(Profile.this);
@@ -114,10 +115,27 @@ public class Profile extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loading.dismissDialog();
+
                     }
                 },30000);
                 startActivity(new Intent((getApplicationContext()), viewUsers.class));
+                finish();
+            }
+        });
+
+        editViewCom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                loading.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                },30000);
+                startActivity(new Intent((getApplicationContext()), viewCompany.class));
                 finish();
             }
         });
@@ -229,7 +247,7 @@ public class Profile extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loading.dismissDialog();
+
                     }
                 },30000);
                 startActivity(new Intent(getApplicationContext(), Login.class));

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,8 @@ public class viewUsers extends AppCompatActivity {
     HolderUser holderUser;
     DatabaseReference ref;
     FirebaseDatabase db;
-
+    Button userHome;
+    final Loading loading = new Loading(viewUsers.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,24 @@ public class viewUsers extends AppCompatActivity {
         String Cuskey = getIntent().getStringExtra("CustomersKey");
         ref  = FirebaseDatabase.getInstance().getReference().child("Customers").child("CustomersKey");
 
+
+        userHome = findViewById(R.id.userhome);
+
+        userHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loading.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                },30000);
+                startActivity(new Intent((getApplicationContext()), Profile.class));
+                finish();
+            }
+        });
 
 }
 
