@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class Signup extends AppCompatActivity {
-    EditText txtEmail, txtPassword;
+    EditText txtEmail, txtPassword, txtUsername, txtContact;
     TextView redirect;
     Button btnSignup;
     //Progress bar to display while registering
@@ -50,6 +50,8 @@ public class Signup extends AppCompatActivity {
 
         txtEmail = findViewById(R.id.emailUser);
         txtPassword = findViewById(R.id.signupPassword);
+        txtUsername = findViewById(R.id.userName);
+        txtContact = findViewById(R.id.contactUser);
         btnSignup = findViewById(R.id.btnCreateAcc);
         redirect = findViewById(R.id.redirectLogin);
         progressDialog = new ProgressDialog(this);
@@ -62,8 +64,11 @@ public class Signup extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = txtEmail.getText().toString().trim();
-                String password = txtPassword.getText().toString().trim();
+                final String email = txtEmail.getText().toString().trim();
+                final String password = txtPassword.getText().toString().trim();
+                final String username = txtUsername.getText().toString().trim();
+                final String contact = txtContact.getText().toString().trim();
+
                 //Validate
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     //set error and focus to email
@@ -78,7 +83,7 @@ public class Signup extends AppCompatActivity {
                 else if (TextUtils.isEmpty(txtPassword.getText().toString()))
                     Toast.makeText(getApplicationContext(), "Please enter a Password", Toast.LENGTH_SHORT).show();
                 else {
-                    registerCustomer(email, password); //Register Customer
+                    registerCustomer(email, password, username, contact); //Register Customer
                 }
             }
         });
@@ -93,7 +98,7 @@ public class Signup extends AppCompatActivity {
         });
     }
 
-    private void registerCustomer(String email, String password) {
+    private void registerCustomer(String email, String password, final String username, final String contact) {
         //Email and Password validation passed, display progress dialog
         progressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -107,13 +112,14 @@ public class Signup extends AppCompatActivity {
                             //Get user email and uid from auth
                             String email = user.getEmail();
                             String uid = user.getUid();
+
                             //Use hashmap to store user details in DB when registering
                             HashMap<Object, String> hashMap = new HashMap<>();
                             //Insert information into hashmap
                             hashMap.put("email", email);
                             hashMap.put("uid",uid);
-                            hashMap.put("username", ""); //options in edit profile
-                            hashMap.put("contact","");
+                            hashMap.put("username",username); //options in edit profile
+                            hashMap.put("contact",contact);
                             hashMap.put("image","");
 
                             //Firebase Database Instance

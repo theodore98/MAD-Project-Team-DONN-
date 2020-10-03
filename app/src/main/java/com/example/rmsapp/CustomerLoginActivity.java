@@ -189,20 +189,20 @@ public class CustomerLoginActivity extends AppCompatActivity {
                             String email = user.getEmail();
                             String uid = user.getUid();
                             //Use hashmap to store user details in DB when registering
-                            HashMap<Object, String> hashMap = new HashMap<>();
+                           // HashMap<Object, String> hashMap = new HashMap<>(); //commented
                             //Insert information into hashmap
-                            hashMap.put("email", email);
-                            hashMap.put("uid",uid);
-                            hashMap.put("username", ""); //options in edit profile
-                            hashMap.put("contact","");
-                            hashMap.put("image","");
+                           // hashMap.put("email", email); //commented
+                           // hashMap.put("uid",uid); //commented
+                            //hashMap.put("username", ""); //options in edit profile //commented
+                           // hashMap.put("contact",""); //commented
+                            //hashMap.put("image",""); //commented
 
                             //Firebase Database Instance
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             //Store customer
                             DatabaseReference dbRef = database.getReference("Customers");
                             //Insert hashmap data into database
-                            dbRef.child(uid).setValue(hashMap);
+                            //dbRef.child(uid).setValue(hashMap); //commented
                             //User logged in
                             startActivity(new Intent(CustomerLoginActivity.this, DashboardActivity.class));
                             finish();
