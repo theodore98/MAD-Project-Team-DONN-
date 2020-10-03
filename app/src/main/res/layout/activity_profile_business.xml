@@ -224,7 +224,7 @@
 " />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/updatebtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btnshape"
@@ -239,7 +239,7 @@
         app:layout_constraintVertical_bias="0.91" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/deletebtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btnred"

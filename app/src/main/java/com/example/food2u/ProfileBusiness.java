@@ -3,7 +3,9 @@ package com.example.food2u;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +15,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +41,7 @@ public class ProfileBusiness extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    BUtto
+    Button update,delete;
 
 
     @Override
@@ -110,53 +115,89 @@ public class ProfileBusiness extends AppCompatActivity {
 
                     }
                 });
-
-                updateInfo();
-    }
-
-    private void updateInfo() {
-        String name,mobile,address,bank,bankAC,owner,password;
-        name=nameET.getText().toString().trim();
-        mobile=mobileET.getText().toString().trim();
-        address=addressET.getText().toString().trim();
-        bank=bankET.getText().toString().trim();
-        bankAC=acnumberET.getText().toString().trim();
-        owner=ownerET.getText().toString().trim();
-        password=passwordET.getText().toString().trim();
-
-        progressDialog.setMessage("Updating profile...");
-        progressDialog.show();
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("name",""+name);
-        hashMap.put("address",""+address);
-        hashMap.put("password",""+password);
-        hashMap.put("owner",""+owner);
-        hashMap.put("mobileNo",""+mobile);
-        hashMap.put("bank",""+bank);
-        hashMap.put("accountNumber",""+bankAC);
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Business");
-        ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                update=(Button)findViewById(R.id.updatebtn);
+                update.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
-                        Toast.makeText(ProfileBusiness.this, "Profile Updated...", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(ProfileBusiness.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    public void onClick(View view) {
+                        updateInfo();
+
                     }
                 });
 
 
-
-
-
-
     }
+
+    private void updateInfo() {
+        final FirebaseAuth FAuth;
+        databaseReference = firebaseDatabase.getInstance().getReference("Business");
+        FAuth = FirebaseAuth.getInstance();
+
+
+        final String name=nameET.getText().toString().trim();
+        final String mobile=mobileET.getText().toString().trim();
+        final String address=addressET.getText().toString().trim();
+        final String bank=bankET.getText().toString().trim();
+        final String bankAC=acnumberET.getText().toString().trim();
+        final String owner=ownerET.getText().toString().trim();
+        final String password=passwordET.getText().toString().trim();
+        final String email=emailET.getText().toString().trim();
+
+        final ProgressDialog mDialog=new ProgressDialog(ProfileBusiness.this);
+        progressDialog.setMessage("Updating profile...");
+        progressDialog.show();
+        FAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("name",""+name);
+                hashMap.put("address",""+address);
+                hashMap.put("password",""+password);
+                hashMap.put("owner",""+owner);
+                hashMap.put("mobileNo",""+mobile);
+                hashMap.put("bank",""+bank);
+                hashMap.put("accountNumber",""+bankAC);
+
+                FirebaseDatabase.getInstance().getReference("Business")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        mDialog.dismiss();
+                        FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ProfileBusiness.this);
+                                    builder.setMessage("You Have Registered! Make Sure To Verify Your Email");
+                                    builder.setCancelable(false);
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent regRedirect = new Intent(ProfileBusiness.this, HomeBusiness.class);
+                                            regRedirect.putExtra("email", email);
+                                            startActivity(regRedirect);
+
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+                                    AlertDialog Alert = builder.create();
+                                    Alert.show();
+                                } else {
+                                    mDialog.dismiss();
+                                    ReusableCodeForAll.ShowAlert(ProfileBusiness.this, "Error", task.getException().getMessage());
+                                }
+
+                            }
+                        });
+
+
+                    }
+                });
+            }
+        });
+    }
+
+
+
 }
