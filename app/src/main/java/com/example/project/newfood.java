@@ -54,6 +54,7 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
     Spinner spinner;
     DatabaseReference dbRef;
     Food fd;
+    String key;
 
     public newfood() {
     }
@@ -135,7 +136,10 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
                             fd.setFd_price(Double.parseDouble(price.getText().toString().trim()));
                             fd.setDescription(description.getText().toString().trim());
                             fd.setCategory(spinner.getSelectedItem().toString().trim());
-                            dbRef.push().setValue(fd);
+
+                              key = dbRef.push().getKey();
+                              fd.setF_id(key);
+                              dbRef.child(key).setValue(fd);
 
 
 
@@ -228,11 +232,13 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
                         @Override
                         public void onSuccess(Uri uri) {
                             String url = uri.toString();
-
+                            fd = new Food();
+                            fd.setImageur(url);
 
 
 
                             Log.d("DownloadUrl", url);
+
                             pd.dismiss();
 
                             Toast.makeText(newfood.this, "Image Upload Successful", Toast.LENGTH_SHORT).show();

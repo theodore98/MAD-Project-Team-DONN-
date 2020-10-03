@@ -10,6 +10,15 @@ public class Food {
     private  String description;
     private String Category;
     private String Imageur;
+    private String F_id;
+
+    public String getF_id() {
+        return F_id;
+    }
+
+    public void setF_id(String f_id) {
+        F_id = f_id;
+    }
 
     public String getCategory() {
         return Category;

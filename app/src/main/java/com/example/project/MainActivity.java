@@ -2,6 +2,8 @@ package com.example.project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,25 +24,50 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static  final int REQUEST_RESPONSE=1;
-    public static  final String DESCRIPTION ="DESCRIPTION";
+
+    private Adapter adp;
     Button btn;
     Button edit;
     //ImageButton bt2;
     DatabaseReference reRef;
     FirebaseDatabase db;
-    ListView list;
-    ArrayList<String> foodlist ;
+    RecyclerView list;
+    ArrayList<Food> foodlist ;
     Food food;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        list = findViewById(R.id.list);
-        db = FirebaseDatabase.getInstance();
+        list = findViewById(R.id.recyclerView);
+        list.setHasFixedSize(true);
+         list.setLayoutManager(new LinearLayoutManager(this));
+         reRef = FirebaseDatabase.getInstance().getReference("Foods");
         foodlist = new ArrayList<>();
+        food = new Food();
         final ArrayAdapter<String> adapt;
+
+
+        reRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap :snapshot.getChildren())
+                {
+                    food = snap.getValue(Food.class);
+                    foodlist.add(food);
+
+                }
+
+                adp = new Adapter(MainActivity.this,foodlist);
+                list.setAdapter(adp);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -53,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
 
         /*edit  = findViewById(R.id.edit1);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         food = new Food();
-        reRef = FirebaseDatabase.getInstance().getReference("Foods");
-        adapt = new ArrayAdapter<>(this, R.layout.row_for_menu, R.id.descript_id, foodlist);
+        /*reRef = FirebaseDatabase.getInstance().getReference("Foods");
 
         reRef.addValueEventListener(new ValueEventListener() {
               @Override
@@ -96,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                   }
+                  adapt = new ArrayAdapter<String>(this, foodlist);
+
 
                   list.setAdapter(adapt);
 
@@ -128,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
               public void onCancelled(@NonNull DatabaseError error) {
 
               }
-          });
+          });*/
 
 
 
