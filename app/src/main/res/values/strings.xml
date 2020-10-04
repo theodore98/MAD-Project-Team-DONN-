@@ -17,4 +17,28 @@
     <string name="forgotpassword">Forgot Password?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--<string name="app_name">Project</string>-->
+    <string name="newfood">+  New  Food</string>
+    <string name="search"> Search</string>
+    <string name="Edit"> Edit ></string>
+    <string name="confirm"> Confirm</string>
+    <string name="Name"> Name</string>
+    <string name="description"> Description</string>
+    <string name="Category"> Category </string>
+    <string name="Price"> Price</string>
+    <string name="food1"> Tanduri Pizza</string>
+    <string name="food2"> Wing It - BBQ</string>
+    <string name="description1"> Tandoori chicken and onions with a double layer of mozzarella cheese.</string>
+    <string name="description2">  1500</string>
+    <string name="Save"> Save</string>
+    <string name="hi"> Delete</string>
+    <string name="todo">TODO</string>
+    <string name="addimage">+</string>
+    <string name="category">Category</string>
+    <string name="details">details</string>
+    <string name="fd_prof">Food Profile</string>
+    <string name="fd_list">FOOD LIST</string>
+    <string name="foodim">foodim</string>
+    <string name="Editfd">Edit details</string>
+    <string name="Delete">Delete</string>
 </resources>
