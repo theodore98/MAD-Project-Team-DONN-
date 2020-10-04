@@ -109,6 +109,7 @@
         android:id="@+id/textView2"
         android:layout_width="154dp"
         android:layout_height="43dp"
+        android:fontFamily="@font/noto_sans"
         android:text="@string/fd_prof"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"

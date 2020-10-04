@@ -13,11 +13,11 @@
 
     <Button
         android:id="@+id/newfood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
 
 
-        android:background="@drawable/ic_launcher_foreground"
+        android:background="@drawable/ic_baseline_add_circle_24"
         android:fadingEdge="horizontal|vertical"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
@@ -32,6 +32,7 @@
         android:layout_height="62dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="66dp"
+        android:fontFamily="@font/noto_sans"
         android:text="@string/fd_list"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#E4DADA"

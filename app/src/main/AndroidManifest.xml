@@ -21,8 +21,8 @@
         <activity android:name=".Signup" />
         <activity android:name=".Edit" />
         <activity android:name=".newfood" />
-        <activity android:name=".CustomerLoginActivity"/>
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".CustomerLoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
