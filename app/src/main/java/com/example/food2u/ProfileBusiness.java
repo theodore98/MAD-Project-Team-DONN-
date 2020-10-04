@@ -36,7 +36,7 @@ public class ProfileBusiness extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     ProgressDialog progressDialog;
-    EditText nameET,addressET,mobileET,ownerET,bankET,passwordET,acnumberET;
+    TextView nameET,addressET,mobileET,ownerET,bankET,passwordET,acnumberET;
     TextView emailET;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -119,14 +119,15 @@ public class ProfileBusiness extends AppCompatActivity {
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateInfo();
+                        Intent UpdateRedirect=new Intent(ProfileBusiness.this,UpdateBusiness.class);
+                        startActivity(UpdateRedirect);
 
                     }
                 });
 
 
     }
-
+/*
     private void updateInfo() {
         final FirebaseAuth FAuth;
         databaseReference = firebaseDatabase.getInstance().getReference("Business");
@@ -198,6 +199,6 @@ public class ProfileBusiness extends AppCompatActivity {
         });
     }
 
-
+*/
 
 }
