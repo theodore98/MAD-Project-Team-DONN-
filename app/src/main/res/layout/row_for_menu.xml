@@ -1,59 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/description"
-    android:layout_width="match_parent"
-    android:layout_height="277dp">
-
-
-    <androidx.cardview.widget.CardView
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="277dp"
-        android:layout_margin="8dp">
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
 
-        <LinearLayout
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="#dfedd8"
+        app:cardElevation="8dp"
+        >
+
+    <LinearLayout
+        android:layout_width="342dp"
+        android:layout_height="188dp"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_vw"
+            android:layout_width="307dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp" />
+
+        <TextView
+            android:id="@+id/Nm_id"
             android:layout_width="match_parent"
-            android:layout_height="307dp"
-            android:orientation="vertical">
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="start"
+            android:text="@string/details"
+            android:textSize="15dp" />
 
-            <ImageView
-                android:id="@+id/image_vw"
-                android:layout_width="355dp"
-                android:layout_height="141dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp" />
-
-            <TextView
-                android:id="@+id/Nm_id"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:gravity="start"
-                android:text="@string/details"
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/descript_id"
-                android:layout_width="345dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:gravity="start"
-                android:text="@string/details" />
-
-            <Button
-                android:id="@+id/delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Delete" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/descript_id"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="start"
+            android:text="@string/details" />
 
 
-    </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="270dp"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/ic_baseline_delete_24" />
 
-</LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+

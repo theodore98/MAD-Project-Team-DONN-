@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,7 +49,8 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
     long i =0;
     private Uri Imageuri;
     EditText name , price, description;
-    Button   confirm,image;
+    Button   confirm;
+    ImageButton image;
     ImageView imageView;
     TextView category;
     Spinner spinner;
@@ -78,7 +80,7 @@ public class newfood extends AppCompatActivity implements AdapterView.OnItemSele
         price = findViewById(R.id.Price);
         description = findViewById(R.id.descript);
         spinner = (Spinner) findViewById(R.id.spinner1);
-        category =findViewById(R.id.category);
+        //category =findViewById(R.id.category);
         imageView = findViewById(R.id.foodIM);
         confirm = findViewById(R.id.confirm);
         image = findViewById(R.id.addimage);
