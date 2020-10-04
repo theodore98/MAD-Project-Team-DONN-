@@ -30,7 +30,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         //Action Bar and its title
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Home");
+        actionBar.setTitle("Dashboard");
 
         //initialization
         firebaseAuth =FirebaseAuth.getInstance();
@@ -80,7 +80,7 @@ public class DashboardActivity extends AppCompatActivity {
         if(user != null){
             //User is signed in and no changes
             //Set email of logged in user
-           // loggedEmail.setText(user.getEmail());
+            // loggedEmail.setText(user.getEmail());
         }
         else{
             //User is not signed in, go to main activity
@@ -122,5 +122,3 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-

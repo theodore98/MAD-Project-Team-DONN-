@@ -33,6 +33,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
     TextView Signup, RecoverPassword;
     EditText emailLogin, passwordLogin;
     Button submitLogin;
+
     //Declare an instance of FirebaseAuth
     private FirebaseAuth mAuth;
     //Progress Dialog
@@ -96,7 +97,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 showRecoverPassword();
             }
         });
-        
+
         //Initialize progress dialog
         progressDialog = new ProgressDialog(this);
 
@@ -189,12 +190,12 @@ public class CustomerLoginActivity extends AppCompatActivity {
                             String email = user.getEmail();
                             String uid = user.getUid();
                             //Use hashmap to store user details in DB when registering
-                           // HashMap<Object, String> hashMap = new HashMap<>(); //commented
+                            // HashMap<Object, String> hashMap = new HashMap<>(); //commented
                             //Insert information into hashmap
-                           // hashMap.put("email", email); //commented
-                           // hashMap.put("uid",uid); //commented
+                            // hashMap.put("email", email); //commented
+                            // hashMap.put("uid",uid); //commented
                             //hashMap.put("username", ""); //options in edit profile //commented
-                           // hashMap.put("contact",""); //commented
+                            // hashMap.put("contact",""); //commented
                             //hashMap.put("image",""); //commented
 
                             //Firebase Database Instance

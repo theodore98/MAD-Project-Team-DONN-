@@ -157,4 +157,3 @@ public class Signup extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 }
-

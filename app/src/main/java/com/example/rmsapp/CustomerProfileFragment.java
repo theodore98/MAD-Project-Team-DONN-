@@ -21,12 +21,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -66,6 +68,7 @@ public class CustomerProfileFragment extends Fragment {
     ImageView avatarIv;
     TextView userName, emailCustomer, contactCustomer;
     FloatingActionButton fab;
+    Button delete;
     //Permissions constants
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final int STORAGE_REQUEST_CODE = 200;
@@ -108,6 +111,7 @@ public class CustomerProfileFragment extends Fragment {
         emailCustomer  = view.findViewById(R.id.emailTxtview);
         contactCustomer = view.findViewById(R.id.contactTxtview);
         fab = view.findViewById(R.id.fab);
+        delete = view.findViewById(R.id.btnDeleteAcc);
 
         //Initialize progress dialog
         progressDialog = new ProgressDialog(getActivity());
@@ -136,7 +140,7 @@ public class CustomerProfileFragment extends Fragment {
                         Picasso.get().load(image).into(avatarIv);
                     }
                     catch (Exception e){
-                        //Exceotion caught when retrieving image
+                        //Exception caught when retrieving image
                         Picasso.get().load(R.drawable.ic_add_image).into(avatarIv);
                     }
                 }
@@ -155,8 +159,60 @@ public class CustomerProfileFragment extends Fragment {
                 showEditProfileDialog();
             }
         });
-        return view;
+
+
+        //Delete from database
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Delete");
+                builder.setMessage("Deactivating your account will delete your profile. Proceed? ");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Customers");
+                        user.delete();
+                        databaseReference.removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        progressDialog.setMessage("Deleting..");
+                                        Toast.makeText(getActivity(),"Account Deleted Successfully",Toast.LENGTH_SHORT).show();
+                                        Intent i = new Intent(getActivity(),CustomerLoginActivity.class);
+                                        startActivity(i);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+            }
+        });
+
+
+                return view;
     }
+
+
 
     private boolean checkStoragePermission(){
         //return true if storage permission enabled
