@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -32,6 +33,7 @@ public class Signup extends AppCompatActivity {
     Button btnSignup;
     //Progress bar to display while registering
     ProgressDialog progressDialog;
+    Vibrator vibrator;
 
     //Declare an instance of FirebaseAuth
     private FirebaseAuth mAuth;
@@ -48,6 +50,7 @@ public class Signup extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
+
         txtEmail = findViewById(R.id.emailUser);
         txtPassword = findViewById(R.id.signupPassword);
         txtUsername = findViewById(R.id.userName);
@@ -56,6 +59,7 @@ public class Signup extends AppCompatActivity {
         redirect = findViewById(R.id.redirectLogin);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Creating Account...");
+        vibrator =(Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         //Initialize FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
@@ -131,6 +135,7 @@ public class Signup extends AppCompatActivity {
 
                             Toast.makeText(Signup.this, "Account Created Successfully \n"+user.getEmail(),Toast.LENGTH_SHORT);
                             startActivity(new Intent(Signup.this, DashboardActivity.class));
+                            vibrator.vibrate(1000);
                             finish();
 
                         } else {

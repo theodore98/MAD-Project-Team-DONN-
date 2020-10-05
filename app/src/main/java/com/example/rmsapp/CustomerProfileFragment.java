@@ -254,13 +254,21 @@ public class CustomerProfileFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //handle item clicks
-                if (i == 0) {
+                if(i == 0){
+                    //Edit Profile Photo clicked
+                    progressDialog.setMessage("Updating Profile Picture");
+                    profilePhoto = "image";
+                    showImagePicDialog();
+
+                }
+                else if(i == 1){
                     //Edit Username clicked
                     progressDialog.setMessage("Updating Username");
                     //call method to update username and contact, pass key as parameter
                     //to update value in database
                     showNameContactUpdateDialog("username");
-                } else if (i == 1) {
+                }
+                else if(i == 2){
                     //Edit Contact Clicked
                     progressDialog.setMessage("Updating Contact Number");
                     //call method to update username and contact, pass key as parameter
@@ -340,6 +348,187 @@ public class CustomerProfileFragment extends Fragment {
         });
         builder.create().show();
     }
+
+    private void showImagePicDialog() {
+        String options[] = {"Gallery", "Camera"};
+        //Alert Dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //set Title
+        builder.setTitle("Upload Image From");
+        //Set items for dialog
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //handle item clicks
+                if(i == 0){
+                    //Camera Clicked
+                    if(!checkCameraPermission()){
+                        requestCameraPermission();
+                    }
+                    else{
+                        pickFromCamera();
+                    }
+
+                }
+                else if(i == 1) {
+                    //Gallery Clicked
+                    if(!checkStoragePermission()){
+                        requestStoragePermission();
+                    }
+                    else{
+                        pickFromGallery();
+                    }
+                }
+
+            }
+        });
+        //create and show dialog
+        builder.create().show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Method called when permission dialog displayed
+        switch(requestCode){
+            case  CAMERA_REQUEST_CODE:{
+                //pick from camera, first check if camera and storage permissions allowed or not
+                if(grantResults.length > 0){
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if(cameraAccepted && writeStorageAccepted){
+                        //permissions enabled
+                        pickFromCamera();
+                    }
+                    else{
+                        //permissions denied
+                        Toast.makeText(getActivity(), "Enable Camera and Storage Permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            break;
+            case STORAGE_REQUEST_CODE:{
+                //pick from gallery, first check if camera and storage permissions allowed or not
+                if(grantResults.length > 0){
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if(writeStorageAccepted){
+                        //permissions enabled
+                        pickFromGallery();
+                    }
+                    else{
+                        //permissions denied
+                        Toast.makeText(getActivity(), "Enable Storage Permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+            break;
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //Method will be called after choosing image
+        if( resultCode == RESULT_OK){
+            if(requestCode == IMAGE_PICK_GALLERY_CODE){
+                //image picked from gallery, get uri of image
+                uploadPhoto(image_uri);
+
+            }
+            if(requestCode == IMAGE_PICK_CAMERA_CODE){
+                uploadPhoto(image_uri);
+
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void uploadPhoto(Uri uri) {
+        progressDialog.show();
+        //path and name of image to be stored in Firebase
+        String filePathAndName = storagePath+ ""+profilePhoto+""+user.getUid();
+
+        StorageReference storageReference2 = storageReference.child(filePathAndName);
+        storageReference2.putFile(uri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //image is uploaded to storage, get url and store in database
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isSuccessful());
+                        Uri downloadUri = uriTask.getResult();
+
+                        //check image is uploaded or not and url is received
+                        if(uriTask.isSuccessful()){
+                            //image uploaded
+                            //add, update url in database
+                            HashMap<String, Object> results = new HashMap<>();
+                            //First Parameter is Profile pic key = image
+                            //Second parameter contains url of image stored in database
+
+                            results.put(profilePhoto, downloadUri.toString());
+                            databaseReference.child(user.getUid()).updateChildren(results)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            //url in database of user is added successfully
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getActivity(), "Image Updated Successfully", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            //error adding url in database of user
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getActivity(), "Error Updating Image", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+
+                        }
+                        else{
+                            //error
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Error Occured", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //show error , dismiss progress dialog
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void pickFromGallery() {
+        //Intent of picking image from device camera
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Temp Pic");
+        values.put(MediaStore.Images.Media.DESCRIPTION,"Temp Description");
+        //put image uri
+        image_uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        //intent to start camera
+        Intent cameraIntent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE);
+    }
+
+    private void pickFromCamera() {
+        //Pick from Gallery
+        Intent galleryIntent = new Intent (Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE);
+    }
 }
+
 
 

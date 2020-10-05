@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.InputType;
 import android.util.Patterns;
 import android.view.View;
@@ -33,6 +34,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
     TextView Signup, RecoverPassword;
     EditText emailLogin, passwordLogin;
     Button submitLogin;
+    Vibrator vibrator;
 
     //Declare an instance of FirebaseAuth
     private FirebaseAuth mAuth;
@@ -51,6 +53,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
         //Enable Back button
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+        //vibration
+        vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         //initialize FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
@@ -206,6 +211,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
                             //dbRef.child(uid).setValue(hashMap); //commented
                             //User logged in
                             startActivity(new Intent(CustomerLoginActivity.this, DashboardActivity.class));
+                            vibrator.vibrate(1000);
                             finish();
                         } else {
                             //Dismiss progress dialog
