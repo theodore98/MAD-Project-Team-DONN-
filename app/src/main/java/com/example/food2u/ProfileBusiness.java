@@ -121,7 +121,7 @@ public class ProfileBusiness extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                  Intent UpdateRedirect=new Intent(ProfileBusiness.this,UpdateBusiness.class);
+                  Intent UpdateRedirect=new Intent(ProfileBusiness.this,BusinessUpdate.class);
                   startActivity(UpdateRedirect);
 
              }
