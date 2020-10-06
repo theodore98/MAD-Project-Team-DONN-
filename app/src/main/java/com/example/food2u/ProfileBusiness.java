@@ -41,13 +41,14 @@ public class ProfileBusiness extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    Button update,delete;
+    Button update;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_business);
+
 
         nameET=findViewById(R.id.name);
         addressET=findViewById(R.id.address);
@@ -66,6 +67,7 @@ public class ProfileBusiness extends AppCompatActivity {
                 startActivity(home);
             }
         });
+
 
 
 
@@ -115,15 +117,15 @@ public class ProfileBusiness extends AppCompatActivity {
 
                     }
                 });
-                update=(Button)findViewById(R.id.updatebtn);
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent UpdateRedirect=new Intent(ProfileBusiness.this,UpdateBusiness.class);
-                        startActivity(UpdateRedirect);
+        update=(Button)findViewById(R.id.updatebtn);
+        update.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                  Intent UpdateRedirect=new Intent(ProfileBusiness.this,UpdateBusiness.class);
+                  startActivity(UpdateRedirect);
 
-                    }
-                });
+             }
+        });
 
 
     }
