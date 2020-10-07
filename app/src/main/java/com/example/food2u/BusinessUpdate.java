@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,6 +57,8 @@ public class BusinessUpdate extends AppCompatActivity {
 
         firebaseAuUpdate=FirebaseAuth.getInstance();
         userUpdate=firebaseAuUpdate.getCurrentUser();
+
+        String emailRec=getIntent().getStringExtra("emailS");
 
         if(userUpdate == null){
             startActivity(new Intent(getApplicationContext(), LoginBusiness.class));
@@ -109,21 +113,62 @@ public class BusinessUpdate extends AppCompatActivity {
     }
 
     public void updateInformation(){
-        final String nameUp=nameNew.getText().toString().trim();
-        final String mobileUp=mobileNew.getText().toString().trim();
-        final String addressUp=addressNew.getText().toString().trim();
-        final String ownerUp=ownerNew.getText().toString().trim();
-        final String passwordUp=passwordNew.getText().toString().trim();
-        final String bankUp=bankNew.getText().toString().trim();
-        final String acNumUp=acnumberNew.getText().toString().trim();
-        final String emailUp=emailNew.getText().toString();
+        String nameUp=nameNew.getText().toString().trim();
+        String mobileUp=mobileNew.getText().toString().trim();
+        String addressUp=addressNew.getText().toString().trim();
+        String ownerUp=ownerNew.getText().toString().trim();
+        String passwordUp=passwordNew.getText().toString().trim();
+         String bankUp=bankNew.getText().toString().trim();
+         String acNumUp=acnumberNew.getText().toString().trim();
+         String emailUp=emailNew.getText().toString();
 
+
+        HashMap<String , Object> hashMap1 = new HashMap<>();
+        hashMap1.put("mobileNo",mobileUp);
+        hashMap1.put("name",nameUp);
+        hashMap1.put("owner",ownerUp);
+        hashMap1.put("bank",bankUp);
+        hashMap1.put("accountNumber",acNumUp);
+        hashMap1.put("email",emailUp);
+        hashMap1.put("password",passwordUp);
+        hashMap1.put("address",addressUp);
+
+
+        databaseReference=FirebaseDatabase.getInstance().getReference("Business");
+        databaseReference.child(firebaseAuUpdate.getUid()).updateChildren(hashMap1)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                       // progressDialog.dismiss();
+                        startActivity(new Intent(BusinessUpdate.this,ProfileBusiness.class));
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                       // progressDialog.dismiss();
+                        startActivity(new Intent(BusinessUpdate.this, HomeBusiness.class));
+                        finish();
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+        /*
         business=new Business();
         databaseReference=FirebaseDatabase.getInstance().getReference("Business");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(emailUp)){
+                if(dataSnapshot.hasChild(emailRec)){
                     business.setName(nameUp);
                     String nameSend=business.getName();
 
@@ -170,7 +215,7 @@ public class BusinessUpdate extends AppCompatActivity {
 
 
 
-
+*/
     }
 
 }

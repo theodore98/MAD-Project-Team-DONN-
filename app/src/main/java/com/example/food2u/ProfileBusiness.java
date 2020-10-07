@@ -117,11 +117,13 @@ public class ProfileBusiness extends AppCompatActivity {
 
                     }
                 });
+        final String emailS= (String) emailET.getText();
         update=(Button)findViewById(R.id.updatebtn);
         update.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                   Intent UpdateRedirect=new Intent(ProfileBusiness.this,BusinessUpdate.class);
+                  UpdateRedirect.putExtra("emailS",emailS);
                   startActivity(UpdateRedirect);
 
              }
