@@ -36,6 +36,8 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseAuth =FirebaseAuth.getInstance();
         //Bottom navigation view
         bottomNav = findViewById(R.id.navigation);
+
+        //Default load homeview fragment when customer logs in
         if(savedInstanceState==null){
             bottomNav.setItemSelected(R.id.home, true);
             fragmentManager = getSupportFragmentManager();
@@ -73,6 +75,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void checkUserStatus(){
         //Get current user

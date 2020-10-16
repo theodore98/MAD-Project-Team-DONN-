@@ -70,7 +70,7 @@ public class Signup extends AppCompatActivity {
                 final String contact = txtContact.getText().toString().trim();
 
                 //Validate
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) { //Standard method to validate email format
                     //set error and focus to email
                     txtEmail.setError("Invalid Email");
                     txtEmail.setFocusable(true);
@@ -113,14 +113,14 @@ public class Signup extends AppCompatActivity {
                             String email = user.getEmail();
                             String uid = user.getUid();
 
-                            //Use hashmap to store user details in DB when registering
+                            //Use hashmap to store user details in DB when registering(table)
                             HashMap<Object, String> hashMap = new HashMap<>();
                             //Insert information into hashmap
                             hashMap.put("email", email);
                             hashMap.put("uid",uid);
-                            hashMap.put("username",username); //options in edit profile
+                            hashMap.put("username",username);
                             hashMap.put("contact",contact);
-                            hashMap.put("image","");
+                            hashMap.put("image",""); //options in edit profile
 
                             //Firebase Database Instance
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -129,6 +129,7 @@ public class Signup extends AppCompatActivity {
                             //Insert hashmap data into database
                             dbRef.child(uid).setValue(hashMap);
 
+                            //Display successful toast with registered email
                             Toast.makeText(Signup.this, "Account Created Successfully \n"+user.getEmail(),Toast.LENGTH_SHORT);
                             startActivity(new Intent(Signup.this, DashboardActivity.class));
                             finish();
@@ -150,6 +151,8 @@ public class Signup extends AppCompatActivity {
             }
         });
     }
+
+    //Back button actions
     @Override
     public boolean onSupportNavigateUp() {
         //Go to previous activity

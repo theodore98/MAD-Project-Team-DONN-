@@ -110,7 +110,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
     //Method to recover password through email
     private void showRecoverPassword() {
-        //Alert Dialog
+        //Create alert dialog using builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Recover Password");
 
@@ -120,7 +120,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
         //Dialog views
         final EditText emailEt = new EditText(this);
         emailEt.setHint("Email Address");
-        emailEt.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        emailEt.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS); //text variant must be email address
         //Set the min width to fit letters regardless of length
         emailEt.setMinEms(16);
 
@@ -135,7 +135,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Input Email
                 String email = emailEt.getText().toString().trim();
-                beginRecovery(email);
+                beginRecovery(email); //Start the recovery process
             }
         });
 
@@ -157,6 +157,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
         //Display Progress Dialog
         progressDialog.setMessage("Sending Email");
         progressDialog.show();
+        //firebase auth method to recover password using email
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -172,13 +173,14 @@ public class CustomerLoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
-                //Retrieve and display correct error message
+                //Retrieve and display correct error message - System error message
                 Toast.makeText(CustomerLoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
+    //Login customer method
     private void loginUser(String email, String password) {
         //Display Progress Dialog
         progressDialog.setMessage("Logging In..");
@@ -210,8 +212,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
                             DatabaseReference dbRef = database.getReference("Customers");
                             //Insert hashmap data into database
                             //dbRef.child(uid).setValue(hashMap); //commented
+
                             //User logged in
-                            startActivity(new Intent(CustomerLoginActivity.this, DashboardActivity.class));
+                            startActivity(new Intent(CustomerLoginActivity.this, DashboardActivity.class)); //redirect to dashboard
                             vibrator.vibrate(1000);
                             finish();
                         } else {
@@ -232,6 +235,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    //Handle back button presses
     @Override
     public boolean onSupportNavigateUp() {
         //Go to previous activity

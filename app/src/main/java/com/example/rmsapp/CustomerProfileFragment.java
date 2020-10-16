@@ -61,9 +61,8 @@ public class CustomerProfileFragment extends Fragment {
     ProgressDialog progressDialog;
     //Storage
     StorageReference storageReference;
-    //path where images are stored
+    //path where images are stored in Firebase storage
     String storagePath = "Profile_photos/";
-
     //variables
     ImageView avatarIv;
     TextView userName, emailCustomer, contactCustomer;
@@ -131,7 +130,7 @@ public class CustomerProfileFragment extends Fragment {
                     String contact = "" + ds.child("contact").getValue();
                     String image = "" + ds.child("image").getValue();
 
-                    //Set data
+                    //Set retrieved data
                     userName.setText(username);
                     emailCustomer.setText(email);
                     contactCustomer.setText(contact);
@@ -160,7 +159,7 @@ public class CustomerProfileFragment extends Fragment {
         });
 
 
-        //Delete from database
+        //Delete from database and from authentication
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,7 +171,7 @@ public class CustomerProfileFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Customers");
+                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Customers").child(user.getUid());
                         user.delete();
                         databaseReference.removeValue()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -266,14 +265,14 @@ public class CustomerProfileFragment extends Fragment {
                     progressDialog.setMessage("Updating Username");
                     //call method to update username and contact, pass key as parameter
                     //to update value in database
-                    showNameContactUpdateDialog("username");
+                    showNameContactUpdateDialog("username"); //key username
                 }
                 else if(i == 2){
                     //Edit Contact Clicked
                     progressDialog.setMessage("Updating Contact Number");
                     //call method to update username and contact, pass key as parameter
                     //to update value in database
-                    showNameContactUpdateDialog("contact");
+                    showNameContactUpdateDialog("contact"); //key contact
                 }
 
             }
@@ -293,7 +292,7 @@ public class CustomerProfileFragment extends Fragment {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setPadding(10, 10, 10, 10);
 
-        //add edit text
+        //add edit text for username or contact
         final EditText editText = new EditText(getActivity());
         editText.setHint("Enter " + key); //edit username, contact
         linearLayout.addView(editText);
