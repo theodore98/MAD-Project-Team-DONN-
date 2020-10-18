@@ -95,7 +95,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ImageViewHolde
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.hasChild(lfds.get(getAdapterPosition()).getF_id()))
                             {
-                                String key =addRef.child(lfds.get(getAdapterPosition()).getF_id()).getKey();
+                                /*String key =addRef.child(lfds.get(getAdapterPosition()).getF_id()).getKey();
                                 Toast.makeText(mcontext.getApplicationContext(),"you ordered this food",Toast.LENGTH_SHORT).show();
                                 DatabaseReference add = FirebaseDatabase.getInstance().getReference().child("Orders");
                                  or= new Orders();
@@ -104,7 +104,18 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ImageViewHolde
                                  or.setPrice(lfds.get(getAdapterPosition()).getFd_price());
                                  String keyor = add.push().getKey();
                                  or.setOderid(keyor);
-                                 add.child(keyor).push();
+                                 add.child(keyor).push();*/
+
+
+
+                                Intent i = new Intent(mcontext,CartActivity.class);
+                                //i.putExtra("des",lfds.get(getAdapterPosition()).getDescription());
+                               // i.putExtra("imagepath",lfds.get(getAdapterPosition()).getImageur());
+                                i.putExtra("price",lfds.get(getAdapterPosition()).getFd_price());
+                                //i.putExtra("key",lfds.get(getAdapterPosition()).getF_id());
+                                i.putExtra("fdname",lfds.get(getAdapterPosition()).getName());
+
+                                mcontext.startActivity(i);
 
 
 
@@ -130,16 +141,16 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ImageViewHolde
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
-            //Intent i = new Intent(mcontext,Edit.class);
+           /* int position = getAdapterPosition();
 
-           // i.putExtra("des",lfds.get(getAdapterPosition()).getDescription());
-           // i.putExtra("imagepath",lfds.get(getAdapterPosition()).getImageur());
-           // i.putExtra("price",lfds.get(getAdapterPosition()).getFd_price());
-           // i.putExtra("key",lfds.get(getAdapterPosition()).getF_id());
-           // i.putExtra("fdname",lfds.get(getAdapterPosition()).getName());
+            Intent i = new Intent(mcontext,CartActivity.class);
+            i.putExtra("des",lfds.get(getAdapterPosition()).getDescription());
+            i.putExtra("imagepath",lfds.get(getAdapterPosition()).getImageur());
+            i.putExtra("price",lfds.get(getAdapterPosition()).getFd_price());
+            i.putExtra("key",lfds.get(getAdapterPosition()).getF_id());
+            i.putExtra("fdname",lfds.get(getAdapterPosition()).getName());
 
-           //  mcontext.startActivity(i);
+            mcontext.startActivity(i);*/
 
 
 

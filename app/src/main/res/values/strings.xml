@@ -41,4 +41,6 @@
     <string name="foodim">foodim</string>
     <string name="Editfd">Edit details</string>
     <string name="Delete">Delete</string>
+    <string name="cartfood">Cart</string>
+    <string name="checkout">Checkout</string>
 </resources>

@@ -73,7 +73,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/noto_sans"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:id="@+id/contactTxtview"
