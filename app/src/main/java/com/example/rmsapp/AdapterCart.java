@@ -131,15 +131,15 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ImageViewHolde
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Intent i = new Intent(mcontext,Edit.class);
+            //Intent i = new Intent(mcontext,Edit.class);
 
-            i.putExtra("des",lfds.get(getAdapterPosition()).getDescription());
-            i.putExtra("imagepath",lfds.get(getAdapterPosition()).getImageur());
-            i.putExtra("price",lfds.get(getAdapterPosition()).getFd_price());
-            i.putExtra("key",lfds.get(getAdapterPosition()).getF_id());
-            i.putExtra("fdname",lfds.get(getAdapterPosition()).getName());
+           // i.putExtra("des",lfds.get(getAdapterPosition()).getDescription());
+           // i.putExtra("imagepath",lfds.get(getAdapterPosition()).getImageur());
+           // i.putExtra("price",lfds.get(getAdapterPosition()).getFd_price());
+           // i.putExtra("key",lfds.get(getAdapterPosition()).getF_id());
+           // i.putExtra("fdname",lfds.get(getAdapterPosition()).getName());
 
-            mcontext.startActivity(i);
+           //  mcontext.startActivity(i);
 
 
 
